@@ -41,3 +41,17 @@
 9.MySQL服务的登录和退出(Windows)
 	9.1 登录:mysql -h (主机) -P (端口号) -u (用户名) -p(密码)
 	9.2 退出：exit
+10.MySQL的常见命令
+	10.1 显示存在的数据库: show databases;
+	10.2 打开指定数据库: use "数据库名";
+	10.3 显示当前数据库中存在的表: show tables;
+	10.4 显示指定库的表: show tables from "数据库名"；
+	10.5 查看当前所在的库:select database();
+	10.6 创建表 create table “表名”(字段名 字段类型，字段名 字段类型(字段长度));
+	10.7 查看表的结构:desc "表名"；
+	10.8 查看数据：select * from “表名”；
+	10.9 插入数据:insert into “表名" (字段名，字段名) values（字段值，字段值）；
+	10.10 修改数据: update “表名” set 字段名=字段值 where 条件；
+	10.11 删除数据: delete from “表名” where 条件； 
+	10.12 查看数据库的版本：在客户端(select version())、不在客户端(mysql --version);
+	
