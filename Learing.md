@@ -53,5 +53,5 @@
 	10.9 插入数据:insert into “表名" (字段名，字段名) values（字段值，字段值）；
 	10.10 修改数据: update “表名” set 字段名=字段值 where 条件；
 	10.11 删除数据: delete from “表名” where 条件； 
-	10.12 查看数据库的版本：在客户端(select version())、不在客户端(mysql --version);
+	10.12 查看数据库的版本：在客户端(select version())、不在客户端(mysql --version/mysql -V);
 	
