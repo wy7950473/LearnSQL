@@ -27,38 +27,42 @@
 	6.2 (CS)基于客户机-----服务器的DBMS( MySQL、Oracle、SqlServer   )
 7.MySQL的配置文件重要选项	
 	[mysql]
+
 	# 设置mysql客户端默认字符集
-	default-character-set=utf8 
-	[mysqld]
-	#设置3306端口
-	port = 3306 
-	# 设置mysql的安装目录
-	basedir=D:\\softnew\\MYSQL\\mysql-5.7.20-winx64
-	# 允许最大连接数
-	max_connections=200
-	# 服务端使用的字符集默认为8比特编码的latin1字符集
-	character-set-server=utf8
-	# 创建新表时将使用的默认存储引擎
-	default-storage-engine=INNODB
+​	default-character-set=utf8 
+​	[mysqld]
+​	# 设置3306端口
+​	port = 3306 
+​	# 设置mysql的安装目录
+​	basedir=D:\\softnew\\MYSQL\\mysql-5.7.20-winx64
+​	# 允许最大连接数
+​	max_connections=200
+​	# 服务端使用的字符集默认为8比特编码的latin1字符集
+​	character-set-server=utf8
+​	# 创建新表时将使用的默认存储引擎
+​	default-storage-engine=INNODB
 8.MySQL服务的停止与启动
-	8.1 停止（Windows）: net stop "MySQL服务名"
-	8.2 启动（Windows）： net start "MySQL服务名"
+​	8.1 停止（Windows）: net stop "MySQL服务名"
+​	8.2 启动（Windows）： net start "MySQL服务名"
 9.MySQL服务的登录和退出(Windows)
-	9.1 登录:mysql -h (主机) -P (端口号) -u (用户名) -p(密码)
-	9.2 退出：exit
+​	9.1 登录:mysql -h (主机) -P (端口号) -u (用户名) -p(密码)
+​	9.2 退出：exit
 10.MySQL的常见命令
-	10.1 显示存在的数据库: show databases;
-	10.2 打开指定数据库: use "数据库名";
-	10.3 显示当前数据库中存在的表: show tables;
-	10.4 显示指定库的表: show tables from "数据库名"；
-	10.5 查看当前所在的库:select database();
-	10.6 创建表 create table “表名”(字段名 字段类型，字段名 字段类型(字段长度));
-	10.7 查看表的结构:desc "表名"；
-	10.8 查看数据：select * from “表名”；
-	10.9 插入数据:insert into “表名" (字段名，字段名) values（字段值，字段值）；
-	10.10 修改数据: update “表名” set 字段名=字段值 where 条件；
-	10.11 删除数据: delete from “表名” where 条件； 
-	10.12 查看数据库的版本：在客户端(select version())、不在客户端(mysql --version/mysql -V);
+​	10.1 显示存在的数据库: show databases;
+​	10.2 打开指定数据库: use "数据库名";
+​	10.3 显示当前数据库中存在的表: show tables;
+​	10.4 显示指定库的表: show tables from "数据库名"；
+​	10.5 查看当前所在的库:select database();
+​	10.6 创建表 create table “表名”(字段名 字段类型，字段名 字段类型(字段长度));
+​	10.7 查看表的结构:desc "表名"；
+​	10.8 查看数据：select * from “表名”；
+​	10.9 插入数据:insert into “表名" (字段名，字段名) values（字段值，字段值）；
+​	10.10 修改数据: update “表名” set 字段名=字段值 where 条件；
+​	10.11 删除数据: delete from “表名” where 条件； 
+​	10.12 查看数据库的版本：在客户端(select version())、不在客户端(mysql --version/mysql -V);
+
+​	10.13 查看字符集：show variables like '%char%';
+
 11.SQL的语法规范
 	11.1 不区分大小写，但建议关键字大写，表名、列名小写
 	11.2 每条命令最好用分号结尾
@@ -86,3 +90,88 @@ escape '符号'(把指定符号定义为转移符)、可以判断数值型
 		12.2.5 in:可以提高语句的简洁度、值类型必须统一(兼容)、不支持通配符
 		12.2.6 is null/is not null:=和<>不能判断null值
 		12.2.7 安全等于( <=> ): 可以用于判断null值和普通类型的值
+
+​	12.3 排序查询
+
+​		12.3.1 语法：select 查询列表 from 表 where 筛选条件 order by 排序列表(字段、别名、表达式、函数) asc(升序)|desc(降序)
+
+​		12.3.2  特点：默认是升序
+
+​		12.3.3 length(字段)：获取字段的长度
+
+​		12.3.4 order by 一般放在最后，limit 子句除外
+
+​	12.4 常见函数
+
+​		12.4.1 分类：单行函数、分组函数
+
+​		12.4.2 单行函数：字符函数、数字函数、日期函数、其他函数、流程控制函数
+
+​		12.4.3 字符函数
+
+```
+length(字段)：获取字符的长度(字节数)
+concat(字符，字符，.....)：拼接字符
+upper(字符)：把小写变为大写
+lower(字符)：把大写变为小写
+substr():截取字符，索引从1开始
+instr(字符，字串): 返回字串在字符中第一次出现的索引、不存在返回0
+trim(字符)：去掉前后空格
+trim(字符 from 字符1)：去掉字符1前后的指定字符
+lpad(字符，长度，字段1)：在字符前面添加多个字符1使总长度为指定长度、字符长度超过制定长度会进行截取字符
+rpad(字符，长度，字段1)：在字符后面添加多个字符1使总长度为指定长度、字符长度超过制定长度会进行截取字符
+replace():把字符的指定字符用指定字符替换
+```
+
+​		12.4.4 数学函数
+
+```
+round(数值)：四舍五入
+round(数值，位数)：小数点保留几位
+cell(数值)：向上取整
+floor(数值)：向下取整
+truncate(小数，位数)：小数后面保留指定位数
+mod(数值，数值)：取余数
+```
+
+​		12.4.5 日期函数
+
+```
+now(): 返回当前系统时间
+curdate()：返回当前系统日期
+curtime(): 返回当前系统时刻
+year(日期)：获取年
+month(日期)：获取月
+monthname(日期)：获取月(英文)
+str_to_date(日期，格式)：把字符日期转化为指定格式的日期格式
+date_format(日期，格式): 把日期转换为指定格式的字符串
+```
+
+​	12.4.6 其他函数
+
+```
+version(): 查询数据库版本号
+database(): 查看当前数据库
+user():查看当前用户
+```
+
+​	12.4.6 流程控制函数
+
+```
+if(表达式，表达式为true返回的值，表达式为false返回的值)
+case函数：
+	case 要判断的字段和表达式
+	when 常量1 then 要显示的值1或语句1；
+	when 常量2 then 要显示的值2或语句2；
+	......
+	else 要显示的值n或语句n;
+	end
+	--------------------------------
+	case 
+	when 条件1 then 要显示的值1或语句1；
+	when 条件2 then 要显示的值2或语句2；
+	.......
+	else 要显示的值n或语句n;
+	end
+```
+
