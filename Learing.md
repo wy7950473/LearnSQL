@@ -314,3 +314,75 @@ sql92与sql99:
  	放在查询语句的最后
 ```
 
+ 12.4.12 联合查询
+
+```
+union/union all:
+应用场景：要查询的结果来自于多个表，且多个表没有直接的连接关系，但查询的信息一致时
+特点：
+	要求多条查询语句的查询列数是一致的
+	要求多条查询语句的查询的每一列的类型和顺序最好一致
+	union会去重、union all 不会去重
+```
+
+13. DML语言(数据操作语言)：插入(insert)、修改(update)、删除(delete)
+
+    13.1 插入语句
+
+    ```
+    语法：
+    	方式一(支持插入多行,支持子查询)：insert into “表名”（字段1、字段2....） values(字段1的值、字段2的值.....) 【select 查询列表】
+    	方式二：insert into "表名" set 列名 = 值,列名 = 值
+    注意：
+    	插入的值的类型要与列的类型一致或兼容
+    	不可以为null的列必须插入值，可以为null的可以插入null值或者不写
+    	列的位置可以调换
+    	列数和值的个数必须一致
+    	可以省略列名，默认是所有列
+    ```
+
+    13.2 修改语句
+
+    ```
+    语法：
+    	单表：update "表名" set 列名 = 值,列名 = 值,.... where 筛选条件 
+    	多表：
+    		sql92: update 表1 别名,表2 别名 set 列=值,.... where 连接条件 and 筛选条件
+    		sql99: update 表1 别名 inner|left|right|full|cross join 表2 别名
+    		on 连接条件 set 列=值,...... where 筛选条件
+    ```
+
+    13.2 删除语句
+
+    ```
+    语法：
+    	方式一：
+    		单表：delete from  “表名” where 筛选条件
+    		多表：delete 别名 from 表1 inner|left|right|full|cross join 表2 别名 on 连接条件
+    		where 筛选条件
+    	方式二：删除所有数据
+    		truncate table 表名
+    
+假如删除的表中有字增长列，如果用delete删除后，再插入数据，自增长列的值从断点开始，而truncate删除后，再插入数据，自增长列的值从1开始。
+    truncate删除没有返回值，delete删除有返回值。
+    truncate删除不能回滚，delete删除有回滚。
+    ```
+    
+14. DDL(数据定义语言)：库和表的管理
+
+    14.1 库的管理
+
+    ```
+    库的创建：create database (if null exists)库名；
+    库的修改：
+    	更改库的字符集：alter database 库名 character set 字符集；
+    库的删除：drop database 库名；
+    ```
+
+    14.2 表的管理
+
+    ```
+    
+    ```
+
+    
