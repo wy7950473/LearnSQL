@@ -363,17 +363,16 @@ union/union all:
     	方式二：删除所有数据
     		truncate table 表名
     
-假如删除的表中有字增长列，如果用delete删除后，再插入数据，自增长列的值从断点开始，而truncate删除后，再插入数据，自增长列的值从1开始。
-    truncate删除没有返回值，delete删除有返回值。
-    truncate删除不能回滚，delete删除有回滚。
+        假如删除的表中有字增长列，如果用delete删除后，再插入数据，自增长列的值从断点开始，而truncate删除后，再插入数据，自增长列的值从1开始。
+        truncate删除没有返回值，delete删除有返回值。
+        truncate删除不能回滚，delete删除有回滚。
     ```
-    
 14. DDL(数据定义语言)：库和表的管理
 
     14.1 库的管理
 
     ```
-    库的创建：create database (if null exists)库名；
+    库的创建：create database (if not exists)库名；
     库的修改：
     	更改库的字符集：alter database 库名 character set 字符集；
     库的删除：drop database 库名；
@@ -382,7 +381,56 @@ union/union all:
     14.2 表的管理
 
     ```
+    表的创建：
+    	语法：create table 【if not exists】 表名(
+		列名 列的类型(长度) 约束,
+    		列名 列的类型(长度) 约束,
+    		列名 列的类型(长度) 约束,
+    		.....
+    		列名 列的类型(长度) 约束
+    	);
+    	
+    表的修改:
+    	修改列名：alter table 表名 change 【column】 旧列名 新列名 类型；
+       修改列类型: alter table 表名 modify column 列名 类型；
+       添加列: alter table 表名 add column 列名 类型;
+       删除列: alter table 表名 drop column 列名；
+       修改表名: alter table 表名 rename to 新表名；
+       
+    表的删除:
+    	drop table 【if exists】 表名；
+    	
+    复制表:
+    	仅仅结构: create table 表名 like 表名；
+       结构和数据: create table 表名  select * from 表名 where 筛选条件；
+       复制部分结构: create table 表名 select 字段1,字段2,... where 1 = 2;
+    ```
+    
+    14.3 常见的数据类型
     
     ```
-
+    数值型：(unsigned:无符号) (zerofull:长度不够用0填充，使用默认为无符号)
+    	整型：
+    		tinyint：一个字节、有符号(-128～127)、无符号(0~255)
+    		smallint：两个字节、有符号(-32768~32767)、无符号(0～65535)
+    		mediumint：三个字节
+    		int、integer：四个字节
+    		bigint：八个字节
+    	小数：
+    		定点数：
+    		浮点数：
+    字符型：
+    	较短的:char、varchar
+    	较长的:text、blob
+    日期型
+    
+    整型特点：
+    	如果不设置无符号还是有符号，默认是有符号，如果要设置无符号添加unsigned关键字
+    	如果插入的数值超出范围，回报out of range 异常，并且插入临界值
+    	如果不设置长度，会有默认的长度
+    	长度代表显示的最大宽度，长度不够使用0来填充，但必须和zerofull来搭配使用
+    ```
+    
+    
+    
     
