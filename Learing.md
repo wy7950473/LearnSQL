@@ -372,7 +372,7 @@ union/union all:
     14.1 库的管理
 
     ```
-    库的创建：create database (if not exists)库名；
+    库的创建：create database (if not exists)库名 【character set 字符集】；
     库的修改：
     	更改库的字符集：alter database 库名 character set 字符集；
     库的删除：drop database 库名；
@@ -393,9 +393,9 @@ union/union all:
     表的修改:
     	修改列名：alter table 表名 change 【column】 旧列名 新列名 类型；
        修改列类型: alter table 表名 modify column 列名 类型；
-       添加列: alter table 表名 add column 列名 类型;
+       添加列: alter table 表名 add column 列名 类型 【first|after 列名】;
        删除列: alter table 表名 drop column 列名；
-       修改表名: alter table 表名 rename to 新表名；
+       修改表名: alter table 表名 rename 【to】 新表名；
        
     表的删除:
     	drop table 【if exists】 表名；
@@ -411,26 +411,49 @@ union/union all:
     ```
     数值型：(unsigned:无符号) (zerofull:长度不够用0填充，使用默认为无符号)
     	整型：
-    		tinyint：一个字节、有符号(-128～127)、无符号(0~255)
-    		smallint：两个字节、有符号(-32768~32767)、无符号(0～65535)
-    		mediumint：三个字节
-    		int、integer：四个字节
-    		bigint：八个字节
+    		tinyint：1个字节、有符号(-128～127)、无符号(0~255)
+    		smallint：2个字节、有符号(-32768~32767)、无符号(0～65535)
+    		mediumint：3个字节
+    		int、integer：4个字节
+    		bigint：8个字节
     	小数：
     		定点数：
+    			dec(m,d):
+    			decimal(m,d):
     		浮点数：
+    			float(m,d):4个字节
+    			double(m,d):8个字节
     字符型：
-    	较短的:char、varchar
-    	较长的:text、blob
-    日期型
+    	较短的:
+    		char(m)：固定长度的字符
+    		varchar(m)：可变长度的字符
+    		binary：保存二进制
+    		varbinary：保存二进制
+    		enum：保存枚举
+    		set：保存集合
+    	较长的:
+    		text：
+    		blob：
+    日期型：
+    	date：4个字节，日期
+    	datetime：8个字节，日期时间
+    	timestamp(时间戳)：4个字节，日期时间，值受时区影响
+    	time：3个字节，时间
+    	year：1个字节，年
+    
+    选择类型的原则：所选择的类型越简单越好，能保存数值的类型越小越好
     
     整型特点：
     	如果不设置无符号还是有符号，默认是有符号，如果要设置无符号添加unsigned关键字
     	如果插入的数值超出范围，回报out of range 异常，并且插入临界值
     	如果不设置长度，会有默认的长度
     	长度代表显示的最大宽度，长度不够使用0来填充，但必须和zerofull来搭配使用
-    ```
     
+    小数特点：
+    	1、m为整数部位+小数部位，d为小数部位，超出范围则为临界值
+    	2、m和d可以省略，如果是decimal，则m默认为10,d默认为0,如果是float和double,则会根据插入的数据来决定精度
+    	3、定点型的精度较高
+    ```
     
     
     
