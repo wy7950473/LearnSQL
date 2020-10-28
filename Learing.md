@@ -367,6 +367,7 @@ union/union all:
         truncate删除没有返回值，delete删除有返回值。
         truncate删除不能回滚，delete删除有回滚。
     ```
+    
 14. DDL(数据定义语言)：库和表的管理
 
     14.1 库的管理
@@ -455,5 +456,54 @@ union/union all:
     	3、定点型的精度较高
     ```
     
+    14.4 常见的约束
+    
+    ``` 
+    分类：六大约束
+    	not null：非空，保证该字段的值不能为空
+    	default：默认，用于保证该字段有默认值
+    	priamry key：主键，用于保证该字段的值具有唯一性，并且非空
+    	unique：唯一，用于保证该字段的值具有唯一性，可以为空
+    	check：检查约束【mysql中不支持】
+    	foreign key：外键，限制两个表的关系
+    	
+    查看索引：show index from 表名；
+    	
+    create table if not exists 表名(
+    	id int primary key,
+    	stuName varchar(20) not null,
+    	gender char(1) check(gender='男' or gender = '女'),
+    	seat int unique,
+    	age int default 18
+    	majorId int,
+    	
+      【constraint 约束名】 primary key(id),
+      【constraint 约束名】 unique(seat),
+      【constraint 约束名】 check(gender='男' or gender='女'),
+      【constraint 约束名】 foregin key(id) references 表名(id)
+    );
+    
+    约束分类：
+    	列级约束：六大约束都语法上都支持，但是外键约束没有效果
+    	表级约束：除了非空、默认，其他的都支持
+    	
+    主键与唯一的区别：
+    					唯一性       是否允许为空    一个表中可以有多少个   是否允许组合
+    	主键：		唯一				 不可以				多个						允许
+    	唯一：      唯一            可以				 一个					 允许
+    	
+    外键：
+    	1、要求在从表设置外键关系
+    	2、从表的外键列的类型和主表的关联列的类型要求一致或兼容，名称无要求
+    	3、主表中的关联列必须是一个key(主键、唯一键)
+    	4、插数据时，先插入主表后插从表，删数据时，先删从表后删主表
+    	
+    删除主键约束：
+    	alter table 表名 drop primary key;
+    删除唯一约束：
+    	alter table 表名 drop index 约束名;
+    删除外键约束：
+    	alter table 表名 drop foregin key 约束名;
+    ```
     
     
