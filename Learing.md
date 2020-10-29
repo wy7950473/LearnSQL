@@ -506,4 +506,70 @@ union/union all:
     	alter table 表名 drop foregin key 约束名;
     ```
     
+      14.5 标识列(自增长列)
+    
+    ```
+    可以不用手动的插入值，系统提供默认的序列值
+    auto_increment
+    
+    show variables like '%auto_increment%';
+    
+    set auto_increment_increment = 3;
+    
+    特点：
+    	1、必须和key(主键、唯一键)搭配使用
+    	2、一个表至多一个标识列
+    	3、标识列的类型必须是数值型
+    	4、可以通过 set auto_increment_increment = 3;设置步长
+    ```
+    
+15. TCL(Transaction Control Language 事务控制语言)语言
+
+    15.1 事务
+
+    ```
+    一个或一组sql语言组成一个执行单元，这个执行单元要么全部执行，要么全部不执行。
+    
+    查看存储引擎：show engines;
+    
+    事务的ACID属性：
+    	1、原子性(Atomicity)：事务是一个不可分割的工作单元，事务中的操作要么都发生，要么都不发生
+    	2、一致性(Consistency)：事务必须使数据库从一致性形态变化到另外一个一致性形态
+    	3、隔离型(Isolation)：指一个事务执行不能被其他事务干扰，即一个事务内部的操作以及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。
+    	4、持久性(Durability)：持久性是指一个事务一旦被提交，它对数据库中数据对改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响。
+    	
+    事务的创建：
+    	隐式事务：事务没有明显的开启和结束的标志(insert、update、deltet)
+    	显示事务：事务具有明显的开启和结束的标志
+    		前提：必须先设置自动提交功能为禁用 set autocommit = 0;
+    
+    显示事务的步骤：
+    	1、开启事务
+    		set autocommit = 0;
+    		start transaction; 可选
+    	2、编写事务中的sql语句(insert、update、select、delete)
+    	3、结束事务
+    		commit; 提交事务
+    		rollback;回滚
+    ```
+
+    15.2 数据库的隔离级别
+
+    ```
+    并发导致的问题：
+    	脏读：对于两个事务T1、T2，T1读取了已经被T2更新但还没有被提交的字段，之后若T2回滚，T1读取的内容就是暂时且无效的。
+    	不可重复读：对于两个事务T1、T2，T1读取一个字段，然后T2更新了该字段，之后，T1再次读取同一个字段，值就不同了。
+    	幻读：对于两个事务T1、T2，T1从一个表中读取了一个字段，然后T2在该表中插入了一些新的行，之后，如果T1再次读取同一个表，就会多出几行。
+    	
+    隔离级别：
+    	read uncommited(读未提交数据)：脏读、不可重复读、幻读都可能出现
+    	read commited(读已提交数据)：可以避免脏读
+    	repeatable read(可重复读) mysql默认：可以避免脏读、不可重复读
+    	serializable(串行化)：都可以避免但是性能非常低
+    	
+    查看隔离级别：select @@transcation_isolation;
+    设置当前事务隔离级别：set session transaction isolated level 隔离级别；
+    设置全局事务隔离级别：set global transaction isolated level 隔离级别；
+    ```
+
     
