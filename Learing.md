@@ -489,8 +489,8 @@ union/union all:
     	
     主键与唯一的区别：
     					唯一性       是否允许为空    一个表中可以有多少个   是否允许组合
-    	主键：		唯一				 不可以				多个						允许
-    	唯一：      唯一            可以				 一个					 允许
+    	主键：		 唯一				不可以				多个					 允许
+    	唯一：       唯一            可以				    一个				 允许
     	
     外键：
     	1、要求在从表设置外键关系
@@ -551,10 +551,12 @@ union/union all:
     	3、结束事务
     		commit; 提交事务
     		rollback;回滚
+    
+savepoint：节点名，设置保存点，搭配 rollback使用(rollback to 节点名)
     ```
 
     15.2 数据库的隔离级别
-
+    
     ```
     并发导致的问题：
     	脏读：对于两个事务T1、T2，T1读取了已经被T2更新但还没有被提交的字段，之后若T2回滚，T1读取的内容就是暂时且无效的。
@@ -569,7 +571,51 @@ union/union all:
     	
     查看隔离级别：select @@transcation_isolation;
     设置当前事务隔离级别：set session transaction isolated level 隔离级别；
-    设置全局事务隔离级别：set global transaction isolated level 隔离级别；
+设置全局事务隔离级别：set global transaction isolated level 隔离级别；
     ```
-
+    
+    15.3 视图(虚拟表，和普通表一样使用)
+    
+    ```
+    mysql5.1版本出现的新特性，是通过表动态生成的数据
+    
+    语法：
+    	create view 视图名
+    	as
+    	查询语句；
+    	
+    视图的好处：
+    	重用sql语句
+    	简化复杂的sql操作，不必知道它的查询细节
+    	保护数据，提高安全性
+    	
+    视图的修改：
+    	语法：
+    		1、create or replace view 视图名
+    			as
+    			查询语句；
+    		2、alter view 视图名
+    			as 
+    			查询语句；
+    			
+    删除视图：
+    	drop view 视图名1、视图名2、.......
+    	
+    查看视图：
+    	1、desc 视图名
+    	2、show create view 视图名；
+    	
+    更新视图：
+    	插入：insert into 视图名 values(值，值)
+    	修改：update 视图名 set 列名 = 列之，....
+    	删除：delete from 视图名 where 筛选条件
+    	
+    含有以下类型的视图不能更新：
+    	1、包含以下关键字的sql语句：分组函数、distinct、group by、having、union、union all
+    	2、select 中包含子查询
+    	3、join
+    	4、from 一个不能更新的视图
+    	5、where 子句的子查询引用了from子句中的表
+    ```
+    
     
