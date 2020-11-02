@@ -498,12 +498,20 @@ union/union all:
     	3、主表中的关联列必须是一个key(主键、唯一键)
     	4、插数据时，先插入主表后插从表，删数据时，先删从表后删主表
     	
+    增加主键：
+    	alter table 表民 add primary key(列名)；
     删除主键约束：
     	alter table 表名 drop primary key;
     删除唯一约束：
     	alter table 表名 drop index 约束名;
     删除外键约束：
     	alter table 表名 drop foregin key 约束名;
+    	
+    级联删除：
+    	alter table 从表名 add constraint 外键名 foreign key(列名) references 主表(列名) on delete  cascade;
+    
+    级联置空：
+    	alter table 从表名 add constraint 外键名 foreign key(列名) references 主表(列名) on default set null;
     ```
     
       14.5 标识列(自增长列)
@@ -539,7 +547,7 @@ union/union all:
     	4、持久性(Durability)：持久性是指一个事务一旦被提交，它对数据库中数据对改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响。
     	
     事务的创建：
-    	隐式事务：事务没有明显的开启和结束的标志(insert、update、deltet)
+    	隐式事务：事务没有明显的开启和结束的标志(insert、update、delete)
     	显示事务：事务具有明显的开启和结束的标志
     		前提：必须先设置自动提交功能为禁用 set autocommit = 0;
     
@@ -552,9 +560,9 @@ union/union all:
     		commit; 提交事务
     		rollback;回滚
     
-savepoint：节点名，设置保存点，搭配 rollback使用(rollback to 节点名)
+    savepoint：节点名，设置保存点，搭配 rollback使用(rollback to 节点名)
     ```
-
+    
     15.2 数据库的隔离级别
     
     ```
@@ -571,7 +579,7 @@ savepoint：节点名，设置保存点，搭配 rollback使用(rollback to 节�
     	
     查看隔离级别：select @@transcation_isolation;
     设置当前事务隔离级别：set session transaction isolated level 隔离级别；
-设置全局事务隔离级别：set global transaction isolated level 隔离级别；
+    设置全局事务隔离级别：set global transaction isolated level 隔离级别；
     ```
     
     15.3 视图(虚拟表，和普通表一样使用)
@@ -618,4 +626,31 @@ savepoint：节点名，设置保存点，搭配 rollback使用(rollback to 节�
     	5、where 子句的子查询引用了from子句中的表
     ```
     
+16. 变量
+
+    ```
+    系统变量：
+    	全局变量：有系统提供，不是用户定义，属于服务器层面
+    		使用语法：
+    			1、查看所有【会话】系统变量：show global【session】 variables;
+    			2、查看满足条件的部分系统变量：show global 【session】 variables like '%char%';
+    			3、查看指定的某个系统变量：select @@global 【session】.系统变量名; 
+    			4、为某个系统变量赋值：set global【session】系统变量名 = 值；
+    				set @@global【session】.系统变量名 = 值；
+    		注意：如果是全局，则需要加global,如果是会话级别，则需要加 session,如果不写，则默认session
+    		作用域：服务器每次启动都会为所有的全局变量赋于初始值，针对所有的会话有效，但是不能跨重启
+    	会话变量：
+    		作用域：仅仅针对当前会话(连接)有效
+    		使用语法：
+    			1、查看会话变量：show 【session】 variables；
+    			2、查看满足条件的部分会话变量：show【session】 variables like '%char%';
+    			3、查看指定的某个系统变量：select @@【session】.系统变量名; 
+    			4、为某个系统变量赋值：set【session】系统变量名 = 值；
+    				set @@【session】.系统变量名 = 值；
+    自定义变量：
+    	用户变量：
+    	局部变量：
+    	
+    ```
+
     
