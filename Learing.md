@@ -692,6 +692,44 @@ union/union all:
     
     调用存储过程：
     	call 存储过程名(时参列表)；
+    	
+    删除存储过程：每次只能删除一个
+    	drop procedure 存储过程名；
+    	
+    查看存储过程的信息：
+    	show create procedure 存储过程名；
+    ```
+
+18. 函数
+
+    ```
+    存储过程：可以有0个返回，也可以有多个返回，适合做批量插入、批量更新
+    函数：有且只有一个返回，适合做处理数据后返回一个结果
+    
+    开启函数创建功能：set global log_bin_trust_function_creators=1
+    
+    创建语法：
+    	create function 函数名(参数列表) returns 返回类型
+    	begin
+    		函数体
+    		...
+    		return 值；
+    	end
+    
+    注意：
+    	参数列表包含参数名、参数类型两部分；
+    
+    函数体：可定会有return语句，如果没有回报错，如果return语句没有放在函数体最后也不会报错，但是不建议
+    如果函数体中仅仅只有一句话，begin end可以省略，可以使用 delimiter 语句设置结束标记。
+    
+    函数调用：
+    	select 函数名(参数列表)；
+    	
+    查看函数：
+    	show create function 函数名；
+    	
+    删除函数：
+    	drop function 函数名;
     ```
 
     
