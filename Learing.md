@@ -719,7 +719,7 @@ union/union all:
     注意：
     	参数列表包含参数名、参数类型两部分；
     
-    函数体：可定会有return语句，如果没有回报错，如果return语句没有放在函数体最后也不会报错，但是不建议
+    函数体：肯定会有return语句，如果没有会报错，如果return语句没有放在函数体最后也不会报错，但是不建议
     如果函数体中仅仅只有一句话，begin end可以省略，可以使用 delimiter 语句设置结束标记。
     
     函数调用：
@@ -730,6 +730,60 @@ union/union all:
     	
     删除函数：
     	drop function 函数名;
+    ```
+
+19. 流程控制结构
+
+    ```
+    顺序结构：程序从上到下依次执行
+    分支结构：程序从两条或多条路径中选择一条去执行
+    循环结构：程序在满足一定条件的基础上，重复执行一段代码
+    
+    分支结构：
+    	1、if函数：实现简单的双分支，if(表达式，表达式成立的值，表达式不成立的值)
+    	2、case结构(可以放在begin end中，也可以放在begin end 外)
+    		case 要判断的字段和表达式
+          when 常量1 then 要显示的值1或语句1；
+          when 常量2 then 要显示的值2或语句2；
+          ......
+          else 要显示的值n或语句n;
+          end case;
+          --------------------------------
+          case 
+          when 条件1 then 要显示的值1或语句1；
+          when 条件2 then 要显示的值2或语句2；
+          .......
+          else 要显示的值n或语句n;
+          end case;
+       3、if结构：实现多重分支(只能放在 begin end 中)
+       	语法：
+       		if 条件1 then 语句1；
+       		elseif 条件2 then 语句2；
+       		.....
+       		else 语句n;
+       		end if;
+       
+    循环结构：
+    	分类：while、loop、repeat
+    	循环控制：
+    		iterate 类似于 continue,继续，结束本次循环，继续下一次
+    		leave 类似于 break,跳出，结束当前所在的循坏
+    
+    	while	语法：
+    		【标签：】while 循环条件 do 
+    				循环体；
+    		end while 【标签】;
+    		
+    	loop 语法：
+    		【标签：】loop
+    			循环体；
+    		enf loop 【标签】；
+    		
+    	repeat 语法：
+    		【标签：】repeat
+    			循环体；
+    		until 结束循环的条件
+    		end 【标签】；
     ```
 
     
