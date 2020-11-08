@@ -630,7 +630,7 @@ union/union all:
 
     ```
     系统变量：
-    	全局变量：有系统提供，不是用户定义，属于服务器层面
+    	全局变量：由系统提供，不是用户定义，属于服务器层面
     		使用语法：
     			1、查看所有【会话】系统变量：show global【session】 variables;
     			2、查看满足条件的部分系统变量：show global 【session】 variables like '%char%';
@@ -658,7 +658,7 @@ union/union all:
     		作用域：仅仅在定义它的begin end(第一句话)中有效
     		声明：declaer 变量名 类型，declaer 变量名 类型 default 值；
     		赋值：set 局部变量名=值，set 局部变量名:=值，select @局部变量名:=值；
-    			select 字段 into 变量名 from 表；
+    			select 字段 into @变量名 from 表；
     		查看用户变量：select 局部变量名；
     ```
     
